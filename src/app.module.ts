@@ -7,6 +7,8 @@ import { ProductsModule } from './products/products.module';
 import { DATABASE } from './config/configuration';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { AppGateway } from './app.gateway';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { AuthModule } from './auth/auth.module';
     ProductsModule,
     UsersModule,
     AuthModule,
+    ShopModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppGateway],
 })
 export class AppModule {}
 

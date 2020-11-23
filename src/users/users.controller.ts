@@ -57,7 +57,7 @@ export class UsersController {
     return response;
   }
 
-  //UPLOAD XLS
+  //UPLOAD XLS OPTIONAL
   @Post('/uploadFile')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -77,4 +77,12 @@ export class UsersController {
     const response = this.userService.uploadExcel(data.path);
     return response;
   }
+
+
+  @Post('/shopinfo')
+  async updateShopInfo(@Body() data){
+    //TODO: service to update the shop info
+  }
+
+
 }
