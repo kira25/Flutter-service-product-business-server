@@ -79,10 +79,7 @@ export class UsersController {
   }
 
 
-  @Post('/shopinfo')
-  async updateShopInfo(@Body() data){
-    //TODO: service to update the shop info
-  }
+ 
 
 
 }

@@ -13,6 +13,7 @@ export const imageFileFilter = (req, file, callback) => {
       false,
     );
   }
+  req.body.file = file;
   callback(null, true);
 };
 

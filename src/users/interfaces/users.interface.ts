@@ -13,4 +13,5 @@ export interface User extends Document {
   resetPwdPing: string;
   resetPingUsed: boolean;
   resetPwdToken: string;
+  isShopInfo : boolean;
 }

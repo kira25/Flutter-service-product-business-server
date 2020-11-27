@@ -11,13 +11,14 @@ import { PORT } from './config/configuration';
 import { ValidationError } from 'class-validator';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{cors:true});
   await app.listen(PORT);
 
   app.use(bodyParser.json({ limit: '5mb' })); //limit request size
   app.use(bodyParser.urlencoded({ limit: ' 5mb', extended: true }));
 
   app.enableCors({
+    allowedHeaders: 'Authorization',
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

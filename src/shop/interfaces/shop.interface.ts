@@ -15,5 +15,6 @@ export interface Shop extends Document {
   bankAccount: string;
   interbankAccount: string;
   userId: string;
+  email: string;
 }
 //Para manejo interno del proyecto

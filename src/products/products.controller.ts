@@ -12,21 +12,28 @@ import {
   Param,
   NotFoundException,
   Query,
+  UsePipes,
+  ValidationPipe,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+@UsePipes(new ValidationPipe())
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 
   @Post('/create')
-  async createPost(@Res() res, @Body() createProductDTO: CreateProductDTO) {
-    const product = await this.productService.createProduct(createProductDTO);
+  @UseGuards(JwtAuthGuard)
+  async createPost(@Request() req, @Body() createProductDTO: CreateProductDTO) {
+    const product = await this.productService.createProduct(
+      createProductDTO,
+      req.user,
+    );
     console.log(createProductDTO);
-    return res.status(HttpStatus.OK).json({
-      message: 'recieved',
-      product,
-    });
+    return product;
   }
 
   @Get('/')
@@ -34,9 +41,18 @@ export class ProductsController {
     console.log('getProducts');
     const products = await this.productService.getProducts();
     return res.status(HttpStatus.OK).json({
-      message: 'Product created',
+      message: 'Product getted',
       products,
     });
+  }
+
+  //GET PRODUCTS BY USER
+  @Get('/user')
+  @UseGuards(JwtAuthGuard)
+  async getProductUser(@Request() req) {
+    console.log('getProductsUser');
+    const productUser = await this.productService.getProductUser(req.user);
+    return productUser;
   }
 
   @Get(':productId')

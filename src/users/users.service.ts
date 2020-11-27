@@ -53,6 +53,7 @@ export class UsersService {
         createUser.resetPingUsed = false;
         createUser.resetPwdPing = '';
         createUser.resetPwdToken = '';
+        createUser.isShopInfo = false;
 
         return createUser.save().then(
           async user => {
@@ -84,7 +85,8 @@ export class UsersService {
       console.log(email);
       const token = this.jwtService.sign({ email });
       const userByEmail = await this.userModel.findOne({ email: email });
-
+      if (!userByEmail) return { ok: false, response: 'No user found' };
+      console.log(userByEmail);
       return {
         ok: true,
         user: userByEmail,

@@ -17,4 +17,5 @@ export const ShopSchema = new Schema({
   profileTitle: String,
   bankAccount: String,
   interbankAccount: String,
+  email: String,
 });

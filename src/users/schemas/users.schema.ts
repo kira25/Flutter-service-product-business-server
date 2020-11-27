@@ -11,5 +11,6 @@ export const UserSchema = new mongoose.Schema({
   role: Number,
   resetPwdPing: String,
   resetPingUsed: Boolean,
-  resetPwdToken : String
+  resetPwdToken : String,
+  isShopInfo : Boolean,
 });

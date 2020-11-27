@@ -42,4 +42,6 @@ export class CreateUserDto {
   resetPwdPing: string;
   @Allow()
   resetPingUsed: boolean;
+  @Allow()
+  isShopInfo: boolean;
 }

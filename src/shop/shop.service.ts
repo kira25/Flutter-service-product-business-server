@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/interfaces/users.interface';
-import { Shop } from './interfaces/shop';
+import { Shop } from './interfaces/shop.interface';
 
 @Injectable()
 export class ShopService {
@@ -15,15 +15,24 @@ export class ShopService {
     const email = data.email;
     const user = await this.userModel.findOne({ email: email });
     if (!user) return { ok: false, response: 'No user found' };
+    await this.userModel.findOneAndUpdate(
+      { email: email },
+      {
+        isShopInfo: true,
+      },
+      { useFindAndModify: true },
+    );
     const id = user.id;
     body.userId = id;
     body.title = user.shopName;
+    body.email = user.email;
     const shop = await this.shopModel.findOne({ title: body.title });
-    if (shop) return { ok: false, response: 'No user found' };
+    if (shop) return { ok: false, response: 'Shop already exist' };
 
     const newShop = new this.shopModel(body);
     console.log(newShop);
     newShop.save();
+    console.log(newShop);
     return { ok: true, newShop };
   }
 
@@ -39,12 +48,26 @@ export class ShopService {
 
     const shopUpdated = await this.shopModel.findOneAndUpdate(
       { title: shopname },
-      body,
+      {
+        profilePhoto: body.profilePhoto[0].path,
+        profileTitle: body.profileTitle[0].path,
+      },
       {
         new: true,
         useFindAndModify: false,
       },
     );
     return { ok: true, shopUpdated };
+  }
+
+  async getShopInfo(data: any) {
+    const email = data.email;
+    const shop = await this.shopModel.findOne({ email: email });
+    if (!shop) return { ok: false, response: 'No shop found' };
+
+    return {
+      ok: true,
+      shop,
+    };
   }
 }
