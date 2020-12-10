@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateProductDTO {
+export class CreateServiceDTO {
   @IsDefined()
   @IsNotEmpty()
   @IsString()
@@ -15,36 +15,28 @@ export class CreateProductDTO {
   @IsNotEmpty()
   @IsString()
   description: string;
+  deliveryTime: string;
+  attentionHours: string;
+  @IsDefined()
+  @IsNotEmpty()
+  @IsNumber()
+  availableType: number;
   @IsDefined()
   @IsNotEmpty()
   @IsObject()
-  productCategory: Object;
+  location: Object;
   @IsDefined()
   @IsNotEmpty()
-  @IsNumber()
-  stockType: number;
-  stock: any[];
+  @IsString()
+  address: string;
   @IsDefined()
   @IsNotEmpty()
   @IsNumber()
   priceType: number;
+  districtAvailable: any[];
   price: Object;
-  imageProduct: any[];
+  imageService: any[];
   createdAt: Date;
   userId: string;
-  amountStock: number;
-}
-
-export class UpdateProductDTO {
-  @IsDefined()
-  @IsNotEmpty()
-  @IsNumber()
-  stockType: number;
-  stock: any[];
-  @IsDefined()
-  @IsNotEmpty()
-  @IsNumber()
-  priceType: number;
-  price: Object;
-  amountStock: number;
+  isAvailable: Boolean;
 }

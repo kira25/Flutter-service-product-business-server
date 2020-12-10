@@ -28,16 +28,6 @@ export enum SUBCATEGORY {
   TSHIRT,
 }
 
-export enum TECHNOLOGY {
-  BATHROOM,
-  KITCHEN,
-  DECORATION,
-  HOME_ELECTRONIC,
-  WOMEN,
-  FURNITURE,
-  PLANTS,
-}
-
 export enum STOCKTYPE {
   UNIQUE,
   BY_COLOR,
@@ -55,4 +45,21 @@ export enum STOCK {
   BLACK,
   RED,
   PINK,
+}
+
+
+export enum DISTRICT_AVAILABLE{
+  LIMA,
+  ANCON,
+  ATE,
+  BARRANCO,
+  BREÑA,
+  CARABAYLLO,
+  COMAS,
+  JESUSMARIA,
+  LAMOLINA,
+  LINCE,
+  OLIVOS,
+  LURIGANCHO
+
 }

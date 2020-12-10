@@ -19,6 +19,14 @@ import {
 } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ShopService } from './shop.service';
+import * as aws from 'aws-sdk';
+import * as multers3 from 'multer-s3';
+import { S3_ENDPOINT, BUCKET_NAME } from '../config/configuration';
+
+const spacesEndponit = new aws.Endpoint(S3_ENDPOINT);
+const s3 = new aws.S3({
+  endpoint: spacesEndponit,
+});
 
 @Controller('shop')
 export class ShopController {
@@ -47,18 +55,32 @@ export class ShopController {
         { name: 'profileTitle', maxCount: 1 },
       ],
       {
-        storage: diskStorage({
-          destination: './photo',
-          filename: editFileName,
+        storage: multers3({
+          s3,
+          bucket: `${BUCKET_NAME}/Shop`,
+          acl: 'public-read',
+          metadata: (req, file, cb) => {
+            cb(null, {
+              fieldname: file.fieldname,
+            });
+          },
+          key: (req, file, cb) => {
+            console.log(file);
+            cb(null, file.originalname);
+          },
         }),
+        // storage: diskStorage({
+        //   destination: './photo',
+        //   filename: editFileName,
+        // }),
         fileFilter: imageFileFilter,
       },
     ),
   )
   @UseGuards(JwtAuthGuard)
   updateShopInfo(@Request() resp, @UploadedFiles() files) {
-    console.log(files);
-    console.log(files.profilePhoto[0].path);
+    console.log(files.profilePhoto[0].location);
+    console.log(files.profileTitle[0].location);
 
     const newShop = this.shopService.addPhotoBankAccount(files, resp.user);
     return newShop;

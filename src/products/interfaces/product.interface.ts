@@ -11,4 +11,5 @@ export interface Product extends Document {
   readonly imageProduct: any[];
   readonly createdAt: Date;
   readonly userId: string;
+  readonly amountStock: number;
 }

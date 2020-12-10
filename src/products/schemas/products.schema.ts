@@ -6,9 +6,17 @@ export const productSchema = new Schema({
   description: String,
   productCategory: { category: Number, subcategory: Number },
   stockType: Number,
+  amountStock: Number,
   stock: [
     {
       color: Number,
+      quantity: Number,
+      sizeProduct: [
+        {
+          size: Number,
+          sizeQuantity: Number,
+        },
+      ],
     },
   ],
   priceType: Number,

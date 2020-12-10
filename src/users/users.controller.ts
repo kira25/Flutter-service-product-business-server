@@ -29,12 +29,14 @@ export class UsersController {
   @Post('/create')
   async createNewUser(@Body() createUserDto: CreateUserDto) {
     const response = await this.userService.create(createUserDto);
+    console.log(response);
     return response;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/renew')
   async renewToken(@Request() resp) {
+    console.log('renewtoken');
     const response = this.userService.renewToken(resp.user);
     return response;
   }
@@ -77,9 +79,4 @@ export class UsersController {
     const response = this.userService.uploadExcel(data.path);
     return response;
   }
-
-
- 
-
-
 }

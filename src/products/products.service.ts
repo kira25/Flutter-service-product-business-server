@@ -2,7 +2,7 @@ import { Injectable, Request } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './interfaces/product.interface';
-import { CreateProductDTO } from './dto/product.dto';
+import { CreateProductDTO, UpdateProductDTO } from './dto/product.dto';
 import { User } from 'src/users/interfaces/users.interface';
 
 //DEFINE LO QUE SE ESCRIBIRA EN EL CODIGO
@@ -13,9 +13,9 @@ export class ProductsService {
     @InjectModel('User') private userModel: Model<User>,
   ) {}
 
-  async getProducts(): Promise<Product[]> {
+  async getProducts() {
     const products = await this.productModel.find();
-    return products;
+    return { ok: true, products };
   }
   async getProduct(productID: string): Promise<Product> {
     const products = await this.productModel.findById(productID);
@@ -45,6 +45,18 @@ export class ProductsService {
     });
     if (product) return { ok: false, response: 'Product already exist' };
     createProductDTO.userId = user.id;
+    let total = 0;
+    total = createProductDTO.stock.reduce(
+      (acc, curr) =>
+        acc +
+        (curr.quantity == null ? 0 : curr.quantity) +
+        curr.sizeProduct.reduce(
+          (acc2, currproduct) => currproduct.sizeQuantity + acc2,
+          0,
+        ),
+      0,
+    );
+    createProductDTO.amountStock = total;
 
     const newProduct = new this.productModel(createProductDTO);
     await newProduct.save();
@@ -54,19 +66,94 @@ export class ProductsService {
     };
   }
 
-  async updateProduct(
-    product: CreateProductDTO,
-    productID: string,
-  ): Promise<Product> {
-    const updatedProduct = this.productModel.findByIdAndUpdate(
-      productID,
-      product,
-      { new: true },
+  async updateProduct(product: UpdateProductDTO, productID: string) {
+    const newproduct = await this.productModel.findById(productID);
+    if (!newproduct) return { ok: false, response: 'Product not exist' };
+    let total = 0;
+    total = product.stock.reduce(
+      (acc, curr) =>
+        acc +
+        (curr.quantity == null ? 0 : curr.quantity) +
+        curr.sizeProduct.reduce(
+          (acc2, currproduct) => currproduct.sizeQuantity + acc2,
+          0,
+        ),
+      0,
     );
-    return await updatedProduct;
+    product.amountStock = total;
+    const updatedProduct = await this.productModel.findByIdAndUpdate(
+      productID,
+      {
+        stockType: product.stockType,
+        priceType: product.priceType,
+        price: product.price,
+        stock: product.stock,
+        amountStock: product.amountStock,
+        
+      },
+      { new: true, useFindAndModify: false },
+    );
+    console.log('Product Updated');
+    return { ok: true, updatedProduct };
   }
-  async deleteProduct(productID: string): Promise<Product> {
+  async deleteProduct(productID: any) {
+    const product = await this.productModel.findById(productID);
+    console.log(product);
+    if (!product) return { ok: false, response: 'Product not exist' };
     const deletedProduct = await this.productModel.findByIdAndDelete(productID);
-    return deletedProduct;
+    return { ok: true, deletedProduct };
+  }
+
+  async addImageProducts(body: any, data: any, id: any) {
+    console.log('AddImageProducts');
+    const email = data.email;
+    const user = await this.userModel.findOne({ email: email });
+    if (!user) return { ok: false, response: 'No user found' };
+
+    const newProduct = await this.productModel.findById(id);
+    if (!newProduct) return { ok: false, response: 'Product not exist' };
+
+    const productImageUpdated = await this.productModel.findByIdAndUpdate(
+      id,
+      {
+        imageProduct: [
+          {
+            product:
+              typeof body.imageProduct1 == 'undefined'
+                ? null
+                : body.imageProduct1[0].location,
+          },
+          {
+            product:
+              typeof body.imageProduct2 == 'undefined'
+                ? null
+                : body.imageProduct2[0].location,
+          },
+          {
+            product:
+              typeof body.imageProduct3 == 'undefined'
+                ? null
+                : body.imageProduct3[0].location,
+          },
+          {
+            product:
+              typeof body.imageProduct4 == 'undefined'
+                ? null
+                : body.imageProduct4[0].location,
+          },
+          {
+            product:
+              typeof body.imageProduct5 == 'undefined'
+                ? null
+                : body.imageProduct5[0].location,
+          },
+        ],
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      },
+    );
+    return { ok: true, productImageUpdated };
   }
 }
