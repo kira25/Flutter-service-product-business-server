@@ -21,13 +21,7 @@ export class CreateServiceDTO {
   @IsNotEmpty()
   @IsNumber()
   availableType: number;
-  @IsDefined()
-  @IsNotEmpty()
-  @IsObject()
   location: Object;
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
   address: string;
   @IsDefined()
   @IsNotEmpty()
@@ -39,4 +33,29 @@ export class CreateServiceDTO {
   createdAt: Date;
   userId: string;
   isAvailable: Boolean;
+}
+
+export class UpdateServiceDTO {
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
+  deliveryTime: string;
+
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
+  attentionHours: string;
+  @IsDefined()
+  @IsNotEmpty()
+  @IsNumber()
+  availableType: number;
+  location: Object;
+  address: string;
+  @IsDefined()
+  @IsNotEmpty()
+  @IsNumber()
+  priceType: number;
+  districtAvailable: any[];
+  price: Object;
+
 }

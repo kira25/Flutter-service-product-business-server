@@ -21,6 +21,7 @@ export const serviceSchema = new Schema({
     normalPrice: Number,
     offertPrice: Number,
   },
+  priceType: Number,
   imageService: [
     {
       service: String,
@@ -31,9 +32,8 @@ export const serviceSchema = new Schema({
     default: Date.now,
   },
   userId: String,
-  isAvailable : Boolean,
+  isAvailable: Boolean,
 });
-
 
 /* tienda /domicilio
 

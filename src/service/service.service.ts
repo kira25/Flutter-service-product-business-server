@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Service } from './interface/service.interface';
 import { User } from '../users/interfaces/users.interface';
-import { CreateServiceDTO } from './dto/service.dto';
+import { CreateServiceDTO, UpdateServiceDTO } from './dto/service.dto';
 @Injectable()
 export class ServiceService {
   constructor(
@@ -54,6 +54,33 @@ export class ServiceService {
     if (!product) return { ok: false, response: 'Product not exist' };
     const deletedProduct = await this.serviceModel.findByIdAndDelete(productID);
     return { ok: true, deletedProduct };
+  }
+
+  async updateService(
+    updateServiceDto: UpdateServiceDTO,
+    id: string,
+    data: any,
+  ) {
+    const email = data.email;
+    const user = await this.userModel.findOne({ email: email });
+    if (!user) return { ok: false, response: 'No user found' };
+    const newService = await this.serviceModel.findById(id);
+    if (!newService) return { ok: false, response: 'Service not exist' };
+    const updateService = await this.serviceModel.findByIdAndUpdate(
+      id,
+      {
+        deliveryTime: updateServiceDto.deliveryTime,
+        attentionHours: updateServiceDto.attentionHours,
+        availableType: updateServiceDto.availableType,
+        location: updateServiceDto.location,
+        address: updateServiceDto.address,
+        priceType: updateServiceDto.priceType,
+        districtAvailable: updateServiceDto.districtAvailable,
+        price: updateServiceDto.price,
+      },
+      { new: true, useFindAndModify: false },
+    );
+    return { ok: true, updateService };
   }
 
   async addImageServices(body: any, data: any, id: any) {

@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { productSchema } from './schemas/products.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserSchema } from 'src/users/schemas/users.schema';
+import { AppGateway } from 'src/app.gateway';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { UserSchema } from 'src/users/schemas/users.schema';
     MongooseModule.forFeature([{ name: 'Product', schema: productSchema }]),
   ],
   controllers: [ProductsController],
-  providers: [ProductsService],
+  providers: [ProductsService,AppGateway],
 })
 export class ProductsModule {}
