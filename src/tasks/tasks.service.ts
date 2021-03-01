@@ -31,6 +31,7 @@ export class TasksService {
   async getTasks() {
     const tasks = await this.taskModel.find();
     if (tasks.length == 0) return { ok: false, response: 'No tasks' };
+    console.log(tasks);
     return { ok: true, tasks };
   }
   async getTask(id: string) {
@@ -113,7 +114,7 @@ export class TasksService {
       const tasksByUserId = await this.taskModel.find({
         name: user.firstname,
       });
-      if(!tasksByUserId) return {ok:false, response : 'No tasks'}
+      if (!tasksByUserId) return { ok: false, response: 'No tasks' };
 
       return {
         ok: true,
@@ -127,5 +128,4 @@ export class TasksService {
       };
     }
   }
-  
 }

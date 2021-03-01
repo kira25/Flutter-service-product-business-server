@@ -5,6 +5,7 @@ dotenv.config();
 export const {
   PORT,
   DATABASE,
+  DATABASE_TEST,
   SECRET,
   S3_ENDPOINT,
   AWS_SECRET_ACCESS_KEY,
