@@ -12,7 +12,7 @@ import { ValidationError } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  await app.listen(PORT || 4000);
+  await app.listen(PORT || 5000);
 
   app.use(bodyParser.json({ limit: '5mb' })); //limit request size
   app.use(bodyParser.urlencoded({ limit: ' 5mb', extended: true }));
