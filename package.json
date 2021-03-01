@@ -1,7 +1,7 @@
 {
-  "name": "first-project",
-  "version": "0.0.1",
-  "description": "",
+  "name": "kallpa_business",
+  "version": "0.0.2",
+  "description": "Backend server for kallpa_business",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
