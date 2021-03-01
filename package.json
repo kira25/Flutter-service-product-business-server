@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Backend server for kallpa_business",
   "author": "",
+  "engines": {
+    "node": "14.15.1"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
