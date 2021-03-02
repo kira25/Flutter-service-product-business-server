@@ -15,7 +15,7 @@ import { OrdersProductsModule } from './orders-products/orders-products.module';
 @Module({
   imports: [
     TasksModule,
-    MongooseModule.forRoot(DATABASE),
+    MongooseModule.forRoot(DATABASE_TEST),
     ProductsModule,
     UsersModule,
     AuthModule,
