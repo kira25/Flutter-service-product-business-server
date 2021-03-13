@@ -79,8 +79,7 @@ export class ShopController {
   )
   @UseGuards(JwtAuthGuard)
   updateShopInfo(@Request() resp, @UploadedFiles() files) {
-    console.log(files.profilePhoto[0].location);
-    console.log(files.profileTitle[0].location);
+    
 
     const newShop = this.shopService.addPhotoBankAccount(files, resp.user);
     return newShop;

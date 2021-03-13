@@ -9,7 +9,7 @@ import { ServiceService } from './service.service';
 
 @Module({
   controllers: [ServiceController],
-  providers: [ServiceService,AppGateway],
+  providers: [ServiceService, AppGateway],
   imports: [
     AuthModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),

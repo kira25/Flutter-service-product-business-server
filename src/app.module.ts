@@ -7,7 +7,6 @@ import { ProductsModule } from './products/products.module';
 import { DATABASE, DATABASE_TEST } from './config/configuration';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { AppGateway } from './app.gateway';
 import { ShopModule } from './shop/shop.module';
 import { ServiceModule } from './service/service.module';
 import { OrdersProductsModule } from './orders-products/orders-products.module';

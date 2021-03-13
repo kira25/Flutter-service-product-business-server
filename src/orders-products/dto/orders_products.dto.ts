@@ -7,13 +7,15 @@ import {
 } from 'class-validator';
 
 export class CreateOrderProductsDTO {
-  orderId: string;
-  amountProducts: number;
-  clientName: string;
   clientId: string;
+  clientName: string;
   clientAddress: string;
   clientCellphone: string;
   sellerId: string;
+  orderId: string;
+  selectedProducts: any[];
+
+  amountProducts: number;
+
   totalPrice: number;
-  product: any[];
 }

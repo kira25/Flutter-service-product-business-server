@@ -1,17 +1,20 @@
 import { Schema } from 'mongoose';
 
 export const ordersProductsSchema = new Schema({
-  amountProducts: Number,
   clientId: String,
   clientName: String,
   clientAddress: String,
   clientCellphone: String,
+  amountProducts: Number,
   sellerId: String,
   totalPrice: Number,
   orderId: String,
-  products: [
+  selectedProducts: [
     {
       amount: Number,
+      color: Number,
+      size: Number,
+      price: Number,
       productId: String,
     },
   ],

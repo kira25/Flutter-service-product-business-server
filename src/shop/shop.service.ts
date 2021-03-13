@@ -49,8 +49,14 @@ export class ShopService {
     const shopUpdated = await this.shopModel.findOneAndUpdate(
       { title: shopname },
       {
-        profilePhoto: body.profilePhoto[0].location,
-        profileTitle: body.profileTitle[0].location,
+        profilePhoto:
+          body.profilePhoto == undefined
+            ? ''
+            : body.profilePhoto[0].location,
+        profileTitle:
+          body.profileTitle == undefined
+            ? ''
+            : body.profilePhoto[1].location,
       },
       {
         new: true,

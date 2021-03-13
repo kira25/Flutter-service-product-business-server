@@ -18,8 +18,8 @@ export class ProductsService {
     return { ok: true, products };
   }
   async getProduct(productID: string): Promise<Product> {
-    const products = await this.productModel.findById(productID);
-    return products;
+    const product = await this.productModel.findById(productID);
+    return product;
   }
 
   //GET PRODUCTS BY USER
@@ -89,7 +89,6 @@ export class ProductsService {
         price: product.price,
         stock: product.stock,
         amountStock: product.amountStock,
-        
       },
       { new: true, useFindAndModify: false },
     );

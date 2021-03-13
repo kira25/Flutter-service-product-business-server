@@ -1,15 +1,14 @@
 import { Document } from 'mongoose';
 
 export interface OrdersProducts extends Document {
-  orderId: string;
-  amountProducts: number;
-  clientName: string;
   clientId: string;
+  clientName: string;
   clientAddress: string;
   clientCellphone: string;
+  readonly amountProducts: number;
   sellerId: string;
-  totalPrice: number;
-
-  products: any[];
+  readonly totalPrice: number;
+  orderId: string;
+  selectedProducts: any[];
   createdAt: Date;
 }

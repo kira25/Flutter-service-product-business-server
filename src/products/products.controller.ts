@@ -26,6 +26,7 @@ import * as aws from 'aws-sdk';
 import * as multers3 from 'multer-s3';
 import { S3_ENDPOINT, BUCKET_NAME } from '../config/configuration';
 import { imageFileFilter } from '../users/config';
+import { Credentials } from 'aws-sdk';
 
 const spacesEndponit = new aws.Endpoint(S3_ENDPOINT);
 const s3 = new aws.S3({
@@ -48,6 +49,7 @@ export class ProductsController {
     return product;
   }
 
+  //ADD IMAGE PRODUCTS
   @Put('/imageProduct/:productId')
   @UseInterceptors(
     FileFieldsInterceptor(
@@ -87,7 +89,6 @@ export class ProductsController {
     @UploadedFiles() files,
     @Param('productId') productId: any,
   ) {
-   
     const productImage = this.productService.addImageProducts(
       files,
       resp.user,
@@ -96,6 +97,7 @@ export class ProductsController {
     return productImage;
   }
 
+  //GET ALL PRODUCTS
   @Get('/')
   async getProducts() {
     console.log('getProducts');
@@ -112,17 +114,18 @@ export class ProductsController {
     return productUser;
   }
 
-  // @Get(':productId')
-  // async getProduct(@Param('productId') productID: string, @Res() res) {
-  //   console.log('getProduct');
+  //GET PRODUCTS BY ID
+  @Get('/id')
+  async getProduct(@Query('productId') productID: string, @Res() res) {
+    console.log('getProduct');
 
-  //   const products = await this.productService.getProduct(productID);
-  //   if (!products) throw new NotFoundException('Product does not exist');
-  //   return res.status(HttpStatus.OK).json({
-  //     message: 'Product created',
-  //     products,
-  //   });
-  // }
+    const product = await this.productService.getProduct(productID);
+    if (!product) throw new NotFoundException('Product does not exist');
+    return res.status(HttpStatus.OK).json({
+      ok: true,
+      product,
+    });
+  }
 
   @Put('/update/:productId')
   @UseGuards(JwtAuthGuard)

@@ -32,9 +32,7 @@ export class CreateUserDto {
   @IsDefined()
   @IsNumber()
   cellphone: number;
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
+  @Allow()
   shopName: string;
   @IsDefined()
   role: number;

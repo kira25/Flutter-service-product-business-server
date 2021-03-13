@@ -53,7 +53,8 @@ export class UsersService {
         createUser.resetPingUsed = false;
         createUser.resetPwdPing = '';
         createUser.resetPwdToken = '';
-        createUser.isShopInfo = false;
+        if (createUser.role == 2) createUser.isShopInfo = false;
+        
 
         return createUser.save().then(
           async user => {
