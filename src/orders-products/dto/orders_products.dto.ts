@@ -14,8 +14,21 @@ export class CreateOrderProductsDTO {
   sellerId: string;
   orderId: string;
   selectedProducts: any[];
-
+  orderState: number;
   amountProducts: number;
-
   totalPrice: number;
+  deliveryType: number;
+}
+
+export class UpdateOrderProductsDTO {
+ 
+  selectedProducts: any[];
+  orderState: number;
+  totalPrice:number;
+  deliveryType: number;
+  amountProducts: number;
+  deliveryId: string;
+
+
+
 }

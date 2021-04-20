@@ -10,9 +10,14 @@ import { AuthModule } from './auth/auth.module';
 import { ShopModule } from './shop/shop.module';
 import { ServiceModule } from './service/service.module';
 import { OrdersProductsModule } from './orders-products/orders-products.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     TasksModule,
     MongooseModule.forRoot(DATABASE_TEST),
     ProductsModule,

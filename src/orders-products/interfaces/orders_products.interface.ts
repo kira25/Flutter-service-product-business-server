@@ -10,5 +10,9 @@ export interface OrdersProducts extends Document {
   readonly totalPrice: number;
   orderId: string;
   selectedProducts: any[];
+  orderState : number;
   createdAt: Date;
+  deliveryType: number,
+  deliveryId: string,
+
 }
