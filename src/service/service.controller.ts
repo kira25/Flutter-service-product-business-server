@@ -20,7 +20,7 @@ import * as aws from 'aws-sdk';
 import * as multers3 from 'multer-s3';
 import { BUCKET_NAME, S3_ENDPOINT } from 'src/config/configuration';
 import { imageFileFilter } from 'src/users/config';
-import { ServiceService } from './service.service';
+import { ServicesService } from './service.service';
 import { CreateServiceDTO, UpdateServiceDTO } from './dto/service.dto';
 import { AppGateway } from 'src/app.gateway';
 const spacesEndponit = new aws.Endpoint(S3_ENDPOINT);
@@ -28,16 +28,16 @@ const s3 = new aws.S3({
   endpoint: spacesEndponit,
 });
 
+@UseGuards(JwtAuthGuard)
 @UsePipes(new ValidationPipe())
 @Controller('service')
 export class ServiceController {
   constructor(
-    private serviceService: ServiceService,
+    private serviceService: ServicesService,
     private gateway: AppGateway,
   ) {}
 
   @Get('/user')
-  @UseGuards(JwtAuthGuard)
   async getProductUser(@Request() req) {
     console.log('getServicesUser');
     const service = await this.serviceService.getProductUser(req.user);
@@ -45,8 +45,14 @@ export class ServiceController {
     return service;
   }
 
+  @Get('/id')
+  async getServicesById( @Query('serviceId') serviceId: String){
+    const service = await this.serviceService.getServicesById(serviceId);
+    return service;
+
+  }
+
   @Post('/create')
-  @UseGuards(JwtAuthGuard)
   async createService(
     @Body() createServiceDTO: CreateServiceDTO,
     @Request() req,
@@ -60,7 +66,6 @@ export class ServiceController {
   }
 
   @Put('/update') 
-  @UseGuards(JwtAuthGuard)
   async updateService(
     @Request() req,
     @Body() updateService: UpdateServiceDTO,
@@ -107,7 +112,6 @@ export class ServiceController {
       },
     ),
   )
-  @UseGuards(JwtAuthGuard)
   async addImageProduct(
     @Request() resp,
     @UploadedFiles() files,
@@ -121,7 +125,6 @@ export class ServiceController {
     return serviceImages;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('/delete')
   async deleteProduct(@Query('serviceId') serviceId, @Request() req) {
     console.log('delete');

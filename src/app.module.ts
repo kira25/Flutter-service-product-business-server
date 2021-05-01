@@ -12,6 +12,7 @@ import { ServiceModule } from './service/service.module';
 import { OrdersProductsModule } from './orders-products/orders-products.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { OrdersServicesModule } from './orders-services/orders-services.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { join } from 'path';
     ShopModule,
     ServiceModule,
     OrdersProductsModule,
+    OrdersServicesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

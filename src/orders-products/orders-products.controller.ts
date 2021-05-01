@@ -50,6 +50,7 @@ export class OrdersProductsController {
   @Put('/updateOrder')
   @UseGuards(JwtAuthGuard)
   async updateOrderProduct(
+    @Request() req,
     @Body() orderProduct: UpdateOrderProductsDTO,
     @Query('orderProductID') orderProductID,
   ) {
@@ -57,6 +58,10 @@ export class OrdersProductsController {
       orderProduct,
       orderProductID,
     );
+    const order = await this.orderProductService.getUserOrderProducts(req.user);
+    console.log('order', order.orderProduct);
+    this.gateway.server.emit('update-product', order.orderProduct);
+
     return orderProductUpdate;
   }
 }

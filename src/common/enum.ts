@@ -47,8 +47,7 @@ export enum STOCK {
   PINK,
 }
 
-
-export enum DISTRICT_AVAILABLE{
+export enum DISTRICT_AVAILABLE {
   LIMA,
   ANCON,
   ATE,
@@ -60,13 +59,18 @@ export enum DISTRICT_AVAILABLE{
   LAMOLINA,
   LINCE,
   OLIVOS,
-  LURIGANCHO
-
+  LURIGANCHO,
 }
 
-export enum ORDER_PRODUCT_STAGE{
+export enum ORDER_PRODUCT_STAGE {
   PENDING,
   FOLLOWING,
   COMPLETED,
-  REJECTED
+  REJECTED,
+}
+
+export enum ORDER_SERVICE_STAGE {
+  COORDINATE,
+  DONE,
+  CANCELED,
 }

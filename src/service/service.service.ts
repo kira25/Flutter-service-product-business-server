@@ -5,7 +5,7 @@ import { Service } from './interface/service.interface';
 import { User } from '../users/interfaces/users.interface';
 import { CreateServiceDTO, UpdateServiceDTO } from './dto/service.dto';
 @Injectable()
-export class ServiceService {
+export class ServicesService {
   constructor(
     @InjectModel('Service') private readonly serviceModel: Model<Service>,
     @InjectModel('User') private userModel: Model<User>,
@@ -14,6 +14,11 @@ export class ServiceService {
   async getProducts() {
     const service = await this.serviceModel.find();
     return { ok: true, service };
+  }
+
+  async getServicesById(id: String){
+      const service = await this.serviceModel.findById(id);
+      return service;
   }
 
   async getProductUser(data: any) {

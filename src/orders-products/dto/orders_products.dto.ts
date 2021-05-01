@@ -18,6 +18,8 @@ export class CreateOrderProductsDTO {
   amountProducts: number;
   totalPrice: number;
   deliveryType: number;
+  deliveryId: string;
+
 }
 
 export class UpdateOrderProductsDTO {
