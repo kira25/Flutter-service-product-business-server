@@ -14,4 +14,5 @@ export interface Service extends Document {
   readonly imageService: any[];
   readonly createdAt: Date;
   readonly userId: string;
+  readonly isAvailable: Boolean;
 }

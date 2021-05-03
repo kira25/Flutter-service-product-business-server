@@ -43,12 +43,6 @@ export class AppGateway
 
     client.join(user, () => {
       console.log('user has join too room with ' + user.toString());
-      
     });
-  }
-
-  @SubscribeMessage('order-product')
-  handleMessage(client: Socket, payload: any): void {
-    return payload;
   }
 }

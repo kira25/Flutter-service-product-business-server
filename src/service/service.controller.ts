@@ -125,13 +125,25 @@ export class ServiceController {
     return serviceImages;
   }
 
+  @Put('/available')
+  async updateAvailable(
+    @Request() req,
+    @Query('serviceId') serviceId,
+    @Body() data : UpdateServiceDTO
+  ){
+    const updateService = await this.serviceService.updateAvailable(req.user,serviceId,data);
+    const service = await this.serviceService.getProductUser(req.user);
+    this.gateway.server.emit('getServices', service);
+    
+
+    return updateService;
+  }
+
   @Delete('/delete')
   async deleteProduct(@Query('serviceId') serviceId, @Request() req) {
     console.log('delete');
     const serviceDeleted = await this.serviceService.deleteService(serviceId);
-    const service = await this.serviceService.getProductUser(req.user);
-
-    this.gateway.server.emit('getServices', service);
+    
     return serviceDeleted;
   }
 }

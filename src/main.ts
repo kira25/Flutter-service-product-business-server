@@ -24,6 +24,5 @@ async function bootstrap() {
     credentials: true,
   });
   Logger.log(`Server started runnig on ${PORT}`);
-  console.log(`Server listen on ${PORT}`);
 }
 bootstrap();

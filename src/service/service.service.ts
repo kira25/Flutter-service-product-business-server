@@ -4,11 +4,13 @@ import { Model } from 'mongoose';
 import { Service } from './interface/service.interface';
 import { User } from '../users/interfaces/users.interface';
 import { CreateServiceDTO, UpdateServiceDTO } from './dto/service.dto';
+import { AppGateway } from 'src/app.gateway';
 @Injectable()
 export class ServicesService {
   constructor(
     @InjectModel('Service') private readonly serviceModel: Model<Service>,
     @InjectModel('User') private userModel: Model<User>,
+    private gateway: AppGateway,
   ) {}
 
   async getProducts() {
@@ -16,9 +18,9 @@ export class ServicesService {
     return { ok: true, service };
   }
 
-  async getServicesById(id: String){
-      const service = await this.serviceModel.findById(id);
-      return service;
+  async getServicesById(id: String) {
+    const service = await this.serviceModel.findById(id);
+    return service;
   }
 
   async getProductUser(data: any) {
@@ -94,10 +96,10 @@ export class ServicesService {
     const user = await this.userModel.findOne({ email: email });
     if (!user) return { ok: false, response: 'No user found' };
 
-    const newProduct = await this.serviceModel.findById(id);
-    if (!newProduct) return { ok: false, response: 'Product not exist' };
+    const newService = await this.serviceModel.findById(id);
+    if (!newService) return { ok: false, response: 'Service not exist' };
 
-    const productImageUpdated = await this.serviceModel.findByIdAndUpdate(
+    const serviceImageUpdated = await this.serviceModel.findByIdAndUpdate(
       id,
       {
         imageService: [
@@ -138,6 +140,27 @@ export class ServicesService {
         useFindAndModify: false,
       },
     );
-    return { ok: true, productImageUpdated };
+    return { ok: true, serviceImageUpdated };
+  }
+
+  async updateAvailable(data: any, id: string, serviceDTO: UpdateServiceDTO) {
+    const email = data.email;
+    const user = await this.userModel.findOne({ email: email });
+    if (!user) return { ok: false, response: 'No user found' };
+
+    const serviceById = await this.serviceModel.findById(id);
+    if (!serviceById) return { ok: false, response: 'Service not exist' };
+
+    const newService = await this.serviceModel.findByIdAndUpdate(
+      id,
+      {
+        isAvailable: serviceDTO.isAvailable,
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      },
+    );
+    return {ok: true, newService};
   }
 }
