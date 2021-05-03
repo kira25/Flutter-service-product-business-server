@@ -20,7 +20,7 @@ import { OrdersServicesModule } from './orders-services/orders-services.module';
       rootPath: join(__dirname, '..', 'client'),
     }),
     TasksModule,
-    MongooseModule.forRoot(DATABASE_TEST),
+    MongooseModule.forRoot(DATABASE),
     ProductsModule,
     UsersModule,
     AuthModule,
